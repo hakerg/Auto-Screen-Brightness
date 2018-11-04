@@ -2,18 +2,23 @@
 #include "BrightnessAdjuster.h"
 
 
-void BrightnessAdjuster::Adjust(bool leaveDeviceOpen)
+void BrightnessAdjuster::Adjust(int captures, bool leaveDeviceOpen)
 {
 
 	InitDeviceIfClosed();
 
-	/* request a capture */
-	doCapture(0);
 
-	while (isCaptureDone(0) == 0)
+	for (int n = 0; n < captures; n++)
 	{
-		Sleep(1);
-		/* Wait until capture is done. */
+		/* request a capture */
+		doCapture(0);
+
+		while (isCaptureDone(0) == 0)
+		{
+			Sleep(1);
+			/* Wait until capture is done. */
+		}
+
 	}
 	
 	
@@ -35,14 +40,23 @@ void BrightnessAdjuster::Adjust(bool leaveDeviceOpen)
 	avgG /= iMax;
 	avgB /= iMax;
 
-
-	GammaRamp.SetBrightness(NULL, (WORD)avgR, (WORD)avgG, (WORD)avgB);
-
-
-	if (!leaveDeviceOpen)
+	/*if (avgR == 0 && avgG == 0 && avgB == 0)
 	{
-		CloseDeviceIfOpen();
+		Adjust(leaveDeviceOpen);
 	}
+	else
+	{*/
+
+		GammaRamp.SetBrightness(NULL, (WORD)avgR, (WORD)avgG, (WORD)avgB);
+
+
+		if (!leaveDeviceOpen)
+		{
+			CloseDeviceIfOpen();
+		}
+	//}
+
+
 
 }
 
@@ -78,13 +92,13 @@ void BrightnessAdjuster::CloseDeviceIfOpen()
 
 }
 
-void BrightnessAdjuster::threadFunc(BrightnessAdjuster * object, DWORD waitMillis, bool deviceAlwaysOn)
+void BrightnessAdjuster::threadFunc(BrightnessAdjuster * object, DWORD waitMillis, int captures, bool deviceAlwaysOn)
 {
 
 	while (object->threadRunning)
 	{
 
-		object->Adjust(deviceAlwaysOn);
+		object->Adjust(captures, deviceAlwaysOn);
 		Sleep(waitMillis);
 
 	}
@@ -119,11 +133,11 @@ BrightnessAdjuster::~BrightnessAdjuster()
 
 }
 
-void BrightnessAdjuster::StartAdjusting(DWORD waitMillis, bool deviceAlwaysOn)
+void BrightnessAdjuster::StartAdjusting(DWORD waitMillis, int captures, bool deviceAlwaysOn)
 {
 
 	threadRunning = true;
-	thread = std::thread(threadFunc, this, waitMillis, deviceAlwaysOn);
+	thread = std::thread(threadFunc, this, waitMillis, captures, deviceAlwaysOn);
 
 }
 

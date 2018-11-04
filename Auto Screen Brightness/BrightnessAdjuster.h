@@ -19,7 +19,7 @@ private:
 	SimpleCapParams capture;
 	bool deviceReady = false;
 
-	static void threadFunc(BrightnessAdjuster* object, DWORD waitMillis, bool deviceAlwaysOn);
+	static void threadFunc(BrightnessAdjuster* object, DWORD waitMillis, int captures, bool deviceAlwaysOn);
 
 
 public:
@@ -27,9 +27,9 @@ public:
 	~BrightnessAdjuster();
 
 
-	void Adjust(bool leaveDeviceOpen);
+	void Adjust(int captures, bool leaveDeviceOpen);
 
-	void StartAdjusting(DWORD waitMillis, bool deviceAlwaysOn);
+	void StartAdjusting(DWORD waitMillis, int captures, bool deviceAlwaysOn);
 	void StopAdjusting();
 
 	void InitDeviceIfClosed();
