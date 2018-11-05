@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "BrightnessAdjuster.h"
+#include <string>
+#include <Windows.h>
 
 
 void BrightnessAdjuster::Adjust(int captures, bool leaveDeviceOpen)
@@ -20,6 +22,12 @@ void BrightnessAdjuster::Adjust(int captures, bool leaveDeviceOpen)
 		}
 
 	}
+
+
+	if (!leaveDeviceOpen)
+	{
+		CloseDeviceIfOpen();
+	}
 	
 	
 	double avgR = 0, avgG = 0, avgB = 0;
@@ -38,23 +46,25 @@ void BrightnessAdjuster::Adjust(int captures, bool leaveDeviceOpen)
 
 	avgR /= iMax;
 	avgG /= iMax;
-	avgB /= iMax;
+	avgB /= iMax; // 0 - 255
 
-	/*if (avgR == 0 && avgG == 0 && avgB == 0)
+	double maxAvg = avgR;
+	if (avgG > maxAvg) maxAvg = avgG;
+	if (avgB > maxAvg) maxAvg = avgB;
+
+	if (maxAvg == 0)
 	{
-		Adjust(leaveDeviceOpen);
+		avgR = avgG = avgB = 128.0;
 	}
 	else
-	{*/
+	{
+		avgR *= 128.0 / maxAvg;
+		avgG *= 128.0 / maxAvg;
+		avgB *= 128.0 / maxAvg;
+	}
 
-		GammaRamp.SetBrightness(NULL, (WORD)avgR, (WORD)avgG, (WORD)avgB);
-
-
-		if (!leaveDeviceOpen)
-		{
-			CloseDeviceIfOpen();
-		}
-	//}
+	powerShellSetSystemBrightness(int(maxAvg * 100.0 / 255.0));
+	GammaRamp.SetBrightness(NULL, (WORD)avgR, (WORD)avgG, (WORD)avgB);
 
 
 
@@ -103,6 +113,13 @@ void BrightnessAdjuster::threadFunc(BrightnessAdjuster * object, DWORD waitMilli
 
 	}
 
+}
+
+void BrightnessAdjuster::powerShellSetSystemBrightness(int value)
+{
+	std::string command = "PowerShell -Command (Get-WmiObject -Namespace root\\wmi -Class WmiMonitorBrightnessMethods).wmisetbrightness(5, " + std::to_string(value) + ")";
+
+	system(command.c_str());
 }
 
 BrightnessAdjuster::BrightnessAdjuster()

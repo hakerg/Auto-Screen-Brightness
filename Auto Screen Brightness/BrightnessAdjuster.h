@@ -21,6 +21,8 @@ private:
 
 	static void threadFunc(BrightnessAdjuster* object, DWORD waitMillis, int captures, bool deviceAlwaysOn);
 
+	void powerShellSetSystemBrightness(int value);
+
 
 public:
 	BrightnessAdjuster();
