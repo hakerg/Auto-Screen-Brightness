@@ -83,6 +83,7 @@ void BrightnessAdjuster::InitDeviceIfClosed()
 		}
 		else
 		{
+			setCaptureProperty(0, CAPTURE_BRIGHTNESS, 1, 0);
 			deviceReady = true;
 		}
 
