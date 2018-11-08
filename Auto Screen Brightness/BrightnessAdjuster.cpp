@@ -4,7 +4,7 @@
 #include <Windows.h>
 
 
-void BrightnessAdjuster::Adjust(int captures, bool leaveDeviceOpen)
+void BrightnessAdjuster::Adjust(int captures, bool leaveDeviceOpen, double brightnessThreshold)
 {
 
 	InitDeviceIfClosed();
@@ -12,6 +12,7 @@ void BrightnessAdjuster::Adjust(int captures, bool leaveDeviceOpen)
 
 	for (int n = 0; n < captures; n++)
 	{
+		if (n + 1 == captures) setCaptureProperty(0, CAPTURE_BRIGHTNESS, 0.5, 0);
 		/* request a capture */
 		doCapture(0);
 
@@ -30,42 +31,47 @@ void BrightnessAdjuster::Adjust(int captures, bool leaveDeviceOpen)
 	}
 	
 	
-	double avgR = 0, avgG = 0, avgB = 0;
+	double newGamma[3] = { 0, 0, 0 };
 
-	int iMax = 320 * 240;
-	for (int i = 0; i < iMax; i++)
+	int pixelCount = 320 * 240;
+	for (int i = 0; i < pixelCount; i++)
 	{
 
 		BYTE* pixel = (BYTE*)(capture.mTargetBuf + i);
 
-		avgB += pixel[0];
-		avgG += pixel[1];
-		avgR += pixel[2];
+		for (int n = 0; n < 3; n++)
+		{
+			newGamma[n] += pixel[2 - n];
+		}
 
 	}
-
-	avgR /= iMax;
-	avgG /= iMax;
-	avgB /= iMax; // 0 - 255
-
-	double maxAvg = avgR;
-	if (avgG > maxAvg) maxAvg = avgG;
-	if (avgB > maxAvg) maxAvg = avgB;
-
-	if (maxAvg == 0)
+	for (int n = 0; n < 3; n++)
 	{
-		avgR = avgG = avgB = 128.0;
+		newGamma[n] /= pixelCount * 255;
 	}
-	else
+
+
+	double newBrightness = newGamma[0];
+	if (newGamma[1] > newBrightness) newBrightness = newGamma[1];
+	if (newGamma[2] > newBrightness) newBrightness = newGamma[2];
+
+
+	if (abs(newGamma[0] - gamma[0]) + abs(newGamma[1] - gamma[1]) + abs(newGamma[2] - gamma[2]) >= brightnessThreshold)
 	{
-		avgR *= 128.0 / maxAvg;
-		avgG *= 128.0 / maxAvg;
-		avgB *= 128.0 / maxAvg;
+
+		powerShellSetSystemBrightness(int(newBrightness * 100.0));
+
+
+		for (int n = 0; n < 3; n++)
+		{
+			gamma[n] = newGamma[n];
+			if (newGamma[n] > 0.5) newGamma[n] = 0.5;
+		}
+
+		GammaRamp.SetBrightness(NULL, (WORD)(newGamma[0] * 255), (WORD)(newGamma[1] * 255), (WORD)(newGamma[2] * 255));
+		//std::cout << gamma[0] << ", " << gamma[1] << ", " << gamma[2] << std::endl;
+
 	}
-
-	powerShellSetSystemBrightness(int(maxAvg * 100.0 / 255.0));
-	GammaRamp.SetBrightness(NULL, (WORD)avgR, (WORD)avgG, (WORD)avgB);
-
 
 
 }
@@ -83,7 +89,6 @@ void BrightnessAdjuster::InitDeviceIfClosed()
 		}
 		else
 		{
-			setCaptureProperty(0, CAPTURE_BRIGHTNESS, 1, 0);
 			deviceReady = true;
 		}
 
@@ -99,19 +104,6 @@ void BrightnessAdjuster::CloseDeviceIfOpen()
 	{
 		deinitCapture(0);
 		deviceReady = false;
-	}
-
-}
-
-void BrightnessAdjuster::threadFunc(BrightnessAdjuster * object, DWORD waitMillis, int captures, bool deviceAlwaysOn)
-{
-
-	while (object->threadRunning)
-	{
-
-		object->Adjust(captures, deviceAlwaysOn);
-		Sleep(waitMillis);
-
 	}
 
 }
@@ -148,21 +140,5 @@ BrightnessAdjuster::~BrightnessAdjuster()
 	GammaRamp.ResetBrightness(NULL);
 
 	delete[] capture.mTargetBuf;
-
-}
-
-void BrightnessAdjuster::StartAdjusting(DWORD waitMillis, int captures, bool deviceAlwaysOn)
-{
-
-	threadRunning = true;
-	thread = std::thread(threadFunc, this, waitMillis, captures, deviceAlwaysOn);
-
-}
-
-void BrightnessAdjuster::StopAdjusting()
-{
-
-	threadRunning = false;
-	thread.join();
 
 }

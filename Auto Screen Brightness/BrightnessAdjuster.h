@@ -1,7 +1,5 @@
 #pragma once
 
-#include <thread>
-
 #include "escapi.h"
 #include "gammaramp.h"
 
@@ -11,15 +9,11 @@ class BrightnessAdjuster
 {
 private:
 
-
-	std::thread thread;
-	bool threadRunning;
-
 	CGammaRamp GammaRamp;
 	SimpleCapParams capture;
 	bool deviceReady = false;
 
-	static void threadFunc(BrightnessAdjuster* object, DWORD waitMillis, int captures, bool deviceAlwaysOn);
+	double gamma[3] = { -1.0, -1.0, -1.0 };
 
 	void powerShellSetSystemBrightness(int value);
 
@@ -29,10 +23,7 @@ public:
 	~BrightnessAdjuster();
 
 
-	void Adjust(int captures, bool leaveDeviceOpen);
-
-	void StartAdjusting(DWORD waitMillis, int captures, bool deviceAlwaysOn);
-	void StopAdjusting();
+	void Adjust(int captures, bool leaveDeviceOpen, double brightnessThreshold = 0.0);
 
 	void InitDeviceIfClosed();
 	void CloseDeviceIfOpen();
