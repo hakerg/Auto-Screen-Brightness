@@ -79,6 +79,11 @@ void BrightnessAdjuster::Adjust(int captures, bool leaveDeviceOpen, double brigh
 void BrightnessAdjuster::InitDeviceIfClosed()
 {
 
+	if (getCaptureErrorCode(0))
+	{
+		CloseDeviceIfOpen();
+	}
+
 	if (!deviceReady)
 	{
 
