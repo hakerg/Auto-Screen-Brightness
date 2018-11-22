@@ -23,9 +23,9 @@ public:
 	~BrightnessAdjuster();
 
 
-	void Adjust(int captures, bool leaveDeviceOpen, double brightnessThreshold = 0.0);
+	bool Adjust(int captures, bool leaveDeviceOpen, double brightnessThreshold = 0.0);
 
-	void InitDeviceIfClosed();
+	bool TryInitDeviceIfClosed();
 	void CloseDeviceIfOpen();
 };
 

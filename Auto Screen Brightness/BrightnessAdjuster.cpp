@@ -4,10 +4,10 @@
 #include <Windows.h>
 
 
-void BrightnessAdjuster::Adjust(int captures, bool leaveDeviceOpen, double brightnessThreshold)
+bool BrightnessAdjuster::Adjust(int captures, bool leaveDeviceOpen, double brightnessThreshold)
 {
 
-	InitDeviceIfClosed();
+	if (!TryInitDeviceIfClosed()) return false;
 
 
 	for (int n = 0; n < captures; n++)
@@ -71,12 +71,14 @@ void BrightnessAdjuster::Adjust(int captures, bool leaveDeviceOpen, double brigh
 		GammaRamp.SetBrightness(NULL, (WORD)(newGamma[0] * 255), (WORD)(newGamma[1] * 255), (WORD)(newGamma[2] * 255));
 		//std::cout << gamma[0] << ", " << gamma[1] << ", " << gamma[2] << std::endl;
 
+		return true;
+
 	}
 
-
+	return false;
 }
 
-void BrightnessAdjuster::InitDeviceIfClosed()
+bool BrightnessAdjuster::TryInitDeviceIfClosed()
 {
 
 	if (getCaptureErrorCode(0))
@@ -90,7 +92,6 @@ void BrightnessAdjuster::InitDeviceIfClosed()
 		if (initCapture(0, &capture) == 0)
 		{
 			printf("Capture failed - device may already be in use.\n");
-			return;
 		}
 		else
 		{
@@ -99,6 +100,7 @@ void BrightnessAdjuster::InitDeviceIfClosed()
 
 	}
 
+	return deviceReady;
 
 }
 
