@@ -12,7 +12,7 @@ bool BrightnessAdjuster::Adjust(int captures, bool leaveDeviceOpen, double brigh
 
 	for (int n = 0; n < captures; n++)
 	{
-		if (n + 1 == captures) setCaptureProperty(0, CAPTURE_BRIGHTNESS, 0.5, 0);
+
 		/* request a capture */
 		doCapture(0);
 
@@ -54,6 +54,8 @@ bool BrightnessAdjuster::Adjust(int captures, bool leaveDeviceOpen, double brigh
 	double newBrightness = newGamma[0];
 	if (newGamma[1] > newBrightness) newBrightness = newGamma[1];
 	if (newGamma[2] > newBrightness) newBrightness = newGamma[2];
+
+	newBrightness = min(newBrightness * 2.0, 1.0);
 
 
 	if (abs(newGamma[0] - gamma[0]) + abs(newGamma[1] - gamma[1]) + abs(newGamma[2] - gamma[2]) >= brightnessThreshold)
