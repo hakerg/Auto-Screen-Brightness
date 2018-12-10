@@ -55,7 +55,7 @@ bool BrightnessAdjuster::Adjust(int captures, bool leaveDeviceOpen, double brigh
 	if (newGamma[1] > newBrightness) newBrightness = newGamma[1];
 	if (newGamma[2] > newBrightness) newBrightness = newGamma[2];
 
-	newBrightness = min(newBrightness * 2.0, 1.0);
+	newBrightness = min(newBrightness * 1.5, 1.0);
 
 
 	if (abs(newGamma[0] - gamma[0]) + abs(newGamma[1] - gamma[1]) + abs(newGamma[2] - gamma[2]) >= brightnessThreshold)
