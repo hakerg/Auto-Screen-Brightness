@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClInclude Include="Auto Screen Brightness.h" />
     <ClInclude Include="BrightnessAdjuster.h" />
+    <ClInclude Include="ColorModeSwitcher.h" />
     <ClInclude Include="escapi.h" />
     <ClInclude Include="gammaramp.h" />
     <ClInclude Include="Resource.h" />
@@ -162,6 +163,7 @@
   <ItemGroup>
     <ClCompile Include="Auto Screen Brightness.cpp" />
     <ClCompile Include="BrightnessAdjuster.cpp" />
+    <ClCompile Include="ColorModeSwitcher.cpp" />
     <ClCompile Include="escapi.cpp" />
     <ClCompile Include="gammaramp.cpp" />
     <ClCompile Include="stdafx.cpp">
