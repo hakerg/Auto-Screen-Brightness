@@ -24,7 +24,7 @@ bool ColorModeSwitcher::IsDay()
 
 }
 
-void ColorModeSwitcher::SwitchMode(bool day)
+void ColorModeSwitcher::SwitchMode(bool day, bool colorPrevalence)
 {
 
 	std::string data(day ? "1" : "0");
@@ -32,9 +32,18 @@ void ColorModeSwitcher::SwitchMode(bool day)
 	system(("REG ADD HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize /v SystemUsesLightTheme /t REG_DWORD /d " + data + " /f").c_str());
 	system(("REG ADD HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize /v AppsUseLightTheme /t REG_DWORD /d " + data + " /f").c_str());
 
+	if (day) SetColorPrevalence(false);
+	else SetColorPrevalence(colorPrevalence);
 }
 
-void ColorModeSwitcher::SwitchMode()
+void ColorModeSwitcher::SetColorPrevalence(bool prevalence)
 {
-	SwitchMode(IsDay());
+	std::string data(prevalence ? "1" : "0");
+
+	system(("REG ADD HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize /v ColorPrevalence /t REG_DWORD /d " + data + " /f").c_str());
+}
+
+void ColorModeSwitcher::SwitchMode(bool colorPrevalence)
+{
+	SwitchMode(IsDay(), colorPrevalence);
 }

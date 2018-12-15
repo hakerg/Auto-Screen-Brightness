@@ -8,11 +8,12 @@ public:
 
 	static bool IsDay();
 
-	static void SwitchMode(bool day);
+	static void SwitchMode(bool day, bool colorPrevalence);
+
+	static void SetColorPrevalence(bool prevalence);
 
 
-
-	static void SwitchMode();
+	static void SwitchMode(bool colorPrevalence);
 
 };
 
