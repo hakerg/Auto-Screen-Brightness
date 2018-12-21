@@ -121,7 +121,8 @@ void BrightnessAdjuster::powerShellSetSystemBrightness(int value)
 {
 	std::string command = "PowerShell -Command (Get-WmiObject -Namespace root\\wmi -Class WmiMonitorBrightnessMethods).wmisetbrightness(5, " + std::to_string(value) + ")";
 
-	system(command.c_str());
+	//system(command.c_str());
+	WinExec(command.c_str(), SW_HIDE);
 }
 
 BrightnessAdjuster::BrightnessAdjuster()

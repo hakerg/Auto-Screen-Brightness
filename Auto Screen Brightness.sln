@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2046
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28407.52
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Auto Screen Brightness", "Auto Screen Brightness\Auto Screen Brightness.vcxproj", "{93AB0302-8DEF-4C8A-A98A-042CCFCC16E7}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Launcher", "Launcher\Launcher.vcxproj", "{2BD8EEAC-34AB-4B81-8ABF-E1A3CE6309E0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Auto Brightness Adjuster", "Auto Brightness Adjuster\Auto Brightness Adjuster.vcxproj", "{CD3DE097-DA2A-41A7-8C14-9171E51D7955}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,14 +15,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{93AB0302-8DEF-4C8A-A98A-042CCFCC16E7}.Debug|x64.ActiveCfg = Debug|x64
-		{93AB0302-8DEF-4C8A-A98A-042CCFCC16E7}.Debug|x64.Build.0 = Debug|x64
-		{93AB0302-8DEF-4C8A-A98A-042CCFCC16E7}.Debug|x86.ActiveCfg = Debug|Win32
-		{93AB0302-8DEF-4C8A-A98A-042CCFCC16E7}.Debug|x86.Build.0 = Debug|Win32
-		{93AB0302-8DEF-4C8A-A98A-042CCFCC16E7}.Release|x64.ActiveCfg = Release|x64
-		{93AB0302-8DEF-4C8A-A98A-042CCFCC16E7}.Release|x64.Build.0 = Release|x64
-		{93AB0302-8DEF-4C8A-A98A-042CCFCC16E7}.Release|x86.ActiveCfg = Release|Win32
-		{93AB0302-8DEF-4C8A-A98A-042CCFCC16E7}.Release|x86.Build.0 = Release|Win32
 		{2BD8EEAC-34AB-4B81-8ABF-E1A3CE6309E0}.Debug|x64.ActiveCfg = Debug|x64
 		{2BD8EEAC-34AB-4B81-8ABF-E1A3CE6309E0}.Debug|x64.Build.0 = Debug|x64
 		{2BD8EEAC-34AB-4B81-8ABF-E1A3CE6309E0}.Debug|x86.ActiveCfg = Debug|Win32
@@ -31,6 +23,14 @@ Global
 		{2BD8EEAC-34AB-4B81-8ABF-E1A3CE6309E0}.Release|x64.Build.0 = Release|x64
 		{2BD8EEAC-34AB-4B81-8ABF-E1A3CE6309E0}.Release|x86.ActiveCfg = Release|Win32
 		{2BD8EEAC-34AB-4B81-8ABF-E1A3CE6309E0}.Release|x86.Build.0 = Release|Win32
+		{CD3DE097-DA2A-41A7-8C14-9171E51D7955}.Debug|x64.ActiveCfg = Debug|x64
+		{CD3DE097-DA2A-41A7-8C14-9171E51D7955}.Debug|x64.Build.0 = Debug|x64
+		{CD3DE097-DA2A-41A7-8C14-9171E51D7955}.Debug|x86.ActiveCfg = Debug|Win32
+		{CD3DE097-DA2A-41A7-8C14-9171E51D7955}.Debug|x86.Build.0 = Debug|Win32
+		{CD3DE097-DA2A-41A7-8C14-9171E51D7955}.Release|x64.ActiveCfg = Release|x64
+		{CD3DE097-DA2A-41A7-8C14-9171E51D7955}.Release|x64.Build.0 = Release|x64
+		{CD3DE097-DA2A-41A7-8C14-9171E51D7955}.Release|x86.ActiveCfg = Release|Win32
+		{CD3DE097-DA2A-41A7-8C14-9171E51D7955}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

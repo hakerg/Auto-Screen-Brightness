@@ -24,19 +24,19 @@
     <ClInclude Include="Resource.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Auto Screen Brightness.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="gammaramp.h">
+    <ClInclude Include="Auto Brightness Adjuster.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="BrightnessAdjuster.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="ColorModeSwitcher.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
     <ClInclude Include="escapi.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="ColorModeSwitcher.h">
+    <ClInclude Include="gammaramp.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
   </ItemGroup>
@@ -44,24 +44,24 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Auto Screen Brightness.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="gammaramp.cpp">
+    <ClCompile Include="Auto Brightness Adjuster.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="BrightnessAdjuster.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="ColorModeSwitcher.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
     <ClCompile Include="escapi.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="ColorModeSwitcher.cpp">
+    <ClCompile Include="gammaramp.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Auto Screen Brightness.rc">
+    <ResourceCompile Include="Auto Brightness Adjuster.rc">
       <Filter>Pliki zasobów</Filter>
     </ResourceCompile>
   </ItemGroup>
@@ -69,7 +69,7 @@
     <Image Include="small.ico">
       <Filter>Pliki zasobów</Filter>
     </Image>
-    <Image Include="Auto Screen Brightness.ico">
+    <Image Include="Auto Brightness Adjuster.ico">
       <Filter>Pliki zasobów</Filter>
     </Image>
   </ItemGroup>
